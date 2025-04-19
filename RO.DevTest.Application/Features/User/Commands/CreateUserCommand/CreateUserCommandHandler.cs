@@ -23,11 +23,14 @@ public class CreateUserCommandHandler(IIdentityAbstractor identityAbstractor) : 
         Domain.Entities.User newUser = request.AssignTo();
         IdentityResult userCreationResult = await _identityAbstractor.CreateUserAsync(newUser, request.Password);
         if(!userCreationResult.Succeeded) {
+            var errors = string.Join(", ", userCreationResult.Errors.Select(e => e.Description));
+            Console.WriteLine($"Falha ao criar o usuário: {errors}" );
             throw new BadRequestException(userCreationResult);
         }
 
         IdentityResult userRoleResult = await _identityAbstractor.AddToRoleAsync(newUser, request.Role);
         if(!userRoleResult.Succeeded) {
+            
             throw new BadRequestException(userRoleResult);
         }
 

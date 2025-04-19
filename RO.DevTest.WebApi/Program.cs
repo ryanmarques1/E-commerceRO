@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using RO.DevTest.Application;
 using RO.DevTest.Infrastructure.IoC;
+using RO.DevTest.Persistence.Repositories;
+using RO.DevTest.Application.Contracts.Persistence.Repositories;
 using RO.DevTest.Persistence.IoC;
-
 namespace RO.DevTest.WebApi;
+using RO.DevTest.Application.Features.Product.Commands.CreateProductCommand;
 
 public class Program {
     public static void Main(string[] args) {
@@ -12,18 +15,21 @@ public class Program {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.InjectPersistenceDependencies()
+        builder.Services.InjectPersistenceDependencies(builder.Configuration)
             .InjectInfrastructureDependencies();
 
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        
         // Add Mediatr to program
-        builder.Services.AddMediatR(cfg =>
-        {
+        // Adiciona MediatR registrando os assemblies corretos
+            builder.Services.AddMediatR(cfg =>
+            {
             cfg.RegisterServicesFromAssemblies(
-                typeof(ApplicationLayer).Assembly,
-                typeof(Program).Assembly
-            );
-        });
+                typeof(CreateProductCommandHandler).Assembly,
+                typeof(ApplicationLayer).Assembly);
+            });
 
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -33,6 +39,8 @@ public class Program {
         }
 
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
 
         app.UseAuthorization();
 
