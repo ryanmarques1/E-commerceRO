@@ -10,6 +10,7 @@ public class Sale{
     public DateTime DateSale {get;set;}
     public List<ItemSale> Items {get;set;} = new(); 
 
+    public Sale() : base(){ }
 }   
 
 public class ItemSale {
@@ -18,5 +19,7 @@ public class ItemSale {
     public Sale Sale { get; set; } = null!;
     public int ProductId { get; set; }
     public Product Product { get; set; } = null!;
-    public int quantity { get; set; }
+    public int quantitySale { get; set; }
+
+    public ItemSale() : base() { }
 }
