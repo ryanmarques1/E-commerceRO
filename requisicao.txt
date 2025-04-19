@@ -1,0 +1,15 @@
+{
+  "userName": "ryanzada",
+  "name": "Ryan Marques",
+  "email": "ryan@gmail.com",
+  "password": "Teste1234@",
+  "passwordConfirmation": "Teste1234@",
+  "role": 1
+}
+
+{
+  "nameProd": "Notebook Dell",
+  "descriptionProd": "Intel i7, 16GB RAM, SSD 512GB",
+  "price": 5800.00,
+  "quantityStock": 10
+}
