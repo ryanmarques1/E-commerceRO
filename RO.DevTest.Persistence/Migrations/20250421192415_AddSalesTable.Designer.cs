@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RO.DevTest.Persistence;
@@ -11,9 +12,11 @@ using RO.DevTest.Persistence;
 namespace RO.DevTest.Persistence.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20250421192415_AddSalesTable")]
+    partial class AddSalesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,9 +160,11 @@ namespace RO.DevTest.Persistence.Migrations
 
             modelBuilder.Entity("RO.DevTest.Domain.Entities.ItemSale", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("IdItemSale")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdItemSale"));
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
@@ -170,7 +175,9 @@ namespace RO.DevTest.Persistence.Migrations
                     b.Property<int>("quantitySale")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdItemSale");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("SaleId");
 
@@ -217,7 +224,13 @@ namespace RO.DevTest.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("IdSale");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sales", (string)null);
                 });
@@ -343,13 +356,32 @@ namespace RO.DevTest.Persistence.Migrations
 
             modelBuilder.Entity("RO.DevTest.Domain.Entities.ItemSale", b =>
                 {
+                    b.HasOne("RO.DevTest.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RO.DevTest.Domain.Entities.Sale", "Sale")
                         .WithMany("Items")
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Product");
+
                     b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("RO.DevTest.Domain.Entities.Sale", b =>
+                {
+                    b.HasOne("RO.DevTest.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RO.DevTest.Domain.Entities.Sale", b =>

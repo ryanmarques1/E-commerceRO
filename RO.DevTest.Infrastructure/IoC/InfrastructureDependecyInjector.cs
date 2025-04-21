@@ -4,7 +4,7 @@ using RO.DevTest.Application.Contracts.Infrastructure;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.Infrastructure.Abstractions;
 using RO.DevTest.Persistence;
-
+using RO.DevTest.Persistence.Repositories;
 namespace RO.DevTest.Infrastructure.IoC;
 
 public static class InfrastructureDependecyInjector {
@@ -24,8 +24,9 @@ public static class InfrastructureDependecyInjector {
             .AddEntityFrameworkStores<DefaultContext>()
             .AddDefaultTokenProviders();
 
+        
         services.AddScoped<IIdentityAbstractor, IdentityAbstractor>();
-
+        
         return services;
     }
 }

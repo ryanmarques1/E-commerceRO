@@ -1,7 +1,7 @@
 namespace RO.DevTest.Application.DTOs;
 
 public class UpdateProductDto{
-    public Guid IdProd {get;set;} = Guid.NewGuid();
+    public Guid IdProd {get;set;}
 
     public string nameProd {get;set;} = string.Empty;
 
