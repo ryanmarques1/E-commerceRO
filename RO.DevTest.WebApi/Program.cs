@@ -5,6 +5,8 @@ using RO.DevTest.Persistence.Repositories;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 using RO.DevTest.Persistence.IoC;
 namespace RO.DevTest.WebApi;
+
+using RO.DevTest.Application.Contracts.Persistance.Repositories;
 using RO.DevTest.Application.Features.Product.Commands.CreateProductCommand;
 
 public class Program {
@@ -17,7 +19,11 @@ public class Program {
 
         builder.Services.InjectPersistenceDependencies(builder.Configuration)
             .InjectInfrastructureDependencies();
+        
 
+
+        builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         
         // Add Mediatr to program

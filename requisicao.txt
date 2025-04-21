@@ -8,8 +8,8 @@
 }
 
 {
-  "nameProd": "Notebook Dell",
-  "descriptionProd": "Intel i7, 16GB RAM, SSD 512GB",
-  "price": 5800.00,
-  "quantityStock": 10
+    "nameProd": "Notebook Dell",
+    "descriptionProd": "Intel i7, 16GB RAM, SSD 512GB",
+    "price": 5800.00,
+    "quantityStock": 10
 }
