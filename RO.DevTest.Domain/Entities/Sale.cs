@@ -16,5 +16,6 @@ public class ItemSale {
     public Guid ProductId { get; set; }
     public int quantitySale { get; set; }
     public Sale Sale {get;set;} = null!;
+    public Product Product { get; set; } = null!;
     public ItemSale() : base() { }
 }
