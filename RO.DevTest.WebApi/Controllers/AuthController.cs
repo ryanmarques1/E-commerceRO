@@ -17,7 +17,7 @@ public class AuthController(IMediator mediator) : Controller {
         var result = await _mediator.Send(command);
 
         if (result.AccessToken == null)
-            return Unauthorized(new { message = "Invalid username or password" });
+            return Unauthorized(new { message = "Nome de usuário inválido ou senha inválida." });
 
         return Ok(result);
     }
