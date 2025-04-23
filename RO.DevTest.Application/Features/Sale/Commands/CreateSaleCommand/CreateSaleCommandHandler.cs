@@ -24,7 +24,7 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
     public async Task<CreateSaleResult> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
     {   
         if (string.IsNullOrEmpty(request.IdUser)){
-            throw new ArgumentNullException(nameof(request.IdUser), "ERRORR USER");
+            throw new ArgumentNullException(nameof(request.IdUser), "Campo vazio!");
         }
         var user = await _userRepository.GetByIdAsync(Guid.Parse(request.IdUser));
         if (user == null)
@@ -42,7 +42,7 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
         {
             var product = await _productRepository.GetByIdAsync(item.ProductId);
             if (product == null)
-                throw new Exception($"Produto {item.ProductId}não existe.");
+                throw new Exception($"O Produto com ID {item.ProductId} não existe.");
 
             sale.Items.Add(new ItemSale
             {

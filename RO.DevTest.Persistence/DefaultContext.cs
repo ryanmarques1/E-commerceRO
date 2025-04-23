@@ -28,9 +28,14 @@ public class DefaultContext : IdentityDbContext<User> {
             itemsale.HasKey(its => its.Id);
         });
         builder.Entity<ItemSale>()
+        .HasOne(i => i.Product)
+        .WithMany()
+        .HasForeignKey(i => i.ProductId);
+        builder.Entity<ItemSale>()
             .HasOne(i => i.Sale)
             .WithMany(s => s.Items)
             .HasForeignKey(i => i.SaleId);
+
         builder.Entity<Product>(entity => {
             entity.HasKey(prod => prod.IdProd);
             entity.Property(prod => prod.nameProd).IsRequired().HasMaxLength(120);
