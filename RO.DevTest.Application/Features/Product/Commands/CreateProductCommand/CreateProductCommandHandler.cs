@@ -1,6 +1,7 @@
 using System.Collections;
 using MediatR;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
+using RO.DevTest.Domain.Exception;
 
 
 namespace RO.DevTest.Application.Features.Product.Commands.CreateProductCommand;
@@ -24,6 +25,9 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             priceProd = request.priceProd,
             quantityStock = request.quantityStock
         };
+        if (string.IsNullOrWhiteSpace(request.nameProd))
+            throw new BadRequestException("Nome do Produto é obrigatório.");
+
 
         await _repository.AddAsync(product);
 
