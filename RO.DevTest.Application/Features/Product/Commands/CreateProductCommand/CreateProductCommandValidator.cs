@@ -10,14 +10,14 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 
         RuleFor(cpau => cpau.descriptionProd)
                 .NotEmpty()
-                .WithMessage("O Descrição do produto deve ser preenchido.");
+                .WithMessage("A Descrição do produto deve ser preenchido.");
 
         RuleFor(cpau => cpau.priceProd)
             .NotEmpty()
-            .WithMessage("O campo senha precisa ter, pelo menos, 6 caracteres");
+            .WithMessage("O campo preço deve ser preenchido.");
 
         RuleFor(cpau => cpau.quantityStock)
             .NotEmpty()
-            .WithMessage("Coloque um numero inteiro");
+            .WithMessage("Coloque um numero inteiro.");
     }
 }
